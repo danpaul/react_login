@@ -1,0 +1,25 @@
+{
+  "name": "react_login",
+  "version": "0.0.0",
+  "description": "React app for sql_login_middleware",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danpaul/react_login.git"
+  },
+  "author": "Dan Breczinski <pt2323@gmail.com> (http://dpb.me/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danpaul/react_login/issues"
+  },
+  "homepage": "https://github.com/danpaul/react_login",
+  "devDependencies": {
+    "gulp": "^3.8.11"
+  }
+}
