@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/danpaul/react_login",
   "devDependencies": {
+    "browser-sync": "^2.6.4",
     "gulp": "^3.8.11",
     "gulp-concat": "^2.5.2",
     "gulp-react": "^3.0.1",

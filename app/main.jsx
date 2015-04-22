@@ -1,5 +1,5 @@
 
-var FormInputzzz = React.createClass({
+var FormInput = React.createClass({
     getInitialState: function(){
         return {value: ''}
     },
@@ -62,7 +62,6 @@ console.log(this.refs.password.refs.password)
         return(
             <div className="sql-login-register">
                 <form method="POST" onSubmit={this.handleSubmit} >
-<input type="text" name="asdf" ref="asdf" />
                     <FormInput
                         name="email"
                         type="text"
