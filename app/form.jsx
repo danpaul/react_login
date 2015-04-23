@@ -1,4 +1,3 @@
-
 var FormInput = React.createClass({
     getInitialState: function(){
         return {value: ''}
@@ -84,7 +83,7 @@ var RegisterForm = React.createClass({
     }
 })
 
-var FormManager = React.createClass({
+module.exports = React.createClass({
     getInitialState: function(){
         return({ activeForm: 'register' })
     },
@@ -127,11 +126,3 @@ var FormManager = React.createClass({
         )
     }
 })
-
-
-// var FormManager = require('./form.jsx')
-
-React.render(
-    <FormManager />,
-    document.getElementById('content')
-);
