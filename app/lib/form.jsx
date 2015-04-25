@@ -49,13 +49,12 @@ var LoginForm = React.createClass({
 var RegisterForm = React.createClass({
     handleSubmit: function(event){
         event.preventDefault()
-// console.log(this.refs.password.value)
+console.log(this.refs.password.value)
 // console.log(React.findDOMNode(this.refs.password))
 // console.log(React.findDOMNode(this.refs.asdf).value)
 // this.refs.green.refs.inp.getDOMNode().value
 // console.log(React.findDOMNode(this.refs.password.refs.password).value)
 // console.log(this.refs.password.refs.password)
-
     },
     render: function(){
         return(
