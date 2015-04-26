@@ -4,6 +4,7 @@ var browserify = require('browserify');
 var gulp = require('gulp');
 var source = require("vinyl-source-stream");
 var reactify = require('reactify');
+// var uglify = require('gulp-uglify');
 
 var reload      = browserSync.reload;
 
@@ -26,5 +27,5 @@ gulp.task('default', function() {
         }
     });
     gulp.start(['main-build']);
-    gulp.watch('./app/*', ['reload-after']);
+    gulp.watch('./app/**/*.*', ['reload-after']);
 });
