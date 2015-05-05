@@ -2,8 +2,12 @@
 var FormController = require('./lib/form_controller.jsx')
 var endpointIn = 'http://0.0.0.0:3010';
 
-var loginCallback = function(){
-    console.log('login success');
+var loginCallback = function(err){
+    if( err ){
+        console.log(err)
+    } else {
+        console.log('login success')
+    }
 }
 
 React.render(
@@ -94,12 +98,42 @@ module.exports = React.createClass({displayName: "exports",
 
 },{}],4:[function(require,module,exports){
 var FormInput = require('./input.jsx');
+var servicesHandler = require('./services_handler.js')
 
 module.exports = React.createClass({displayName: "exports",
+    getInitialState: function(){
+        return({errorMessage: ''});
+    },
+    handleSubmit: function(event){
+        event.preventDefault()
+        var self = this;
+
+        var email = this.refs.email.getInputValue()
+        var password = this.refs.password.getInputValue()
+
+        servicesHandler.login(this.props.endpoint,
+                              email,
+                              password,
+                              function(err, response){
+            if( err ){
+                self.setState({errorMessage: err});
+                return;
+            }
+
+            self.setState({errorMessage: ''});
+
+            if( self.props.loginCallback ){
+                self.props.loginCallback();
+            }
+        })
+    },
     render: function(){
         return(
             React.createElement("div", {className: "sql-login-login"}, 
-                React.createElement("form", {method: "POST"}, 
+                React.createElement("div", {className: "sql-login-error-message"}, 
+                    this.state.errorMessage
+                ), 
+                React.createElement("form", {method: "POST", onSubmit: this.handleSubmit}, 
                     React.createElement(FormInput, {
                         name: "email", 
                         type: "text", 
@@ -117,7 +151,7 @@ module.exports = React.createClass({displayName: "exports",
     }
 })
 
-},{"./input.jsx":3}],5:[function(require,module,exports){
+},{"./input.jsx":3,"./services_handler.js":6}],5:[function(require,module,exports){
 var FormInput = require('./input.jsx');
 var servicesHandler = require('./services_handler.js')
 
@@ -185,7 +219,7 @@ module.exports = React.createClass({displayName: "exports",
                         type: "password", 
                         label: "ConfirmPassword", 
                         ref: "confirmPassword"}), 
-                    React.createElement("input", {type: "submit", value: "Post"})
+                    React.createElement("input", {type: "submit", value: "Submit"})
                 )
             )
         )
@@ -217,29 +251,64 @@ var STATUS_SUCCESS = 'success',
 
 module.exports = {
     register: function(endpoint, email, password, callback){
-        $.ajax({
+        makeRequest({
             method: 'POST',
             url: endpoint + '/register',
             data: {
                 email: email,
                 password: password
-            },
-            success: function(response){
-                if( response.status === STATUS_SUCCESS ){
-                    callback();
-                } else if(response.status === STATUS_FAILURE || 
-                          response.status === STATUS_ERROR ){
-                    callback(response.message);
-                } else {
-                    callback('An error occurred.');
-                }
-            },
-            error: function( jqXHR, status, errorThrown){
-                callback('Error contacting server. You might want to try again.');
+            }            
+        }, callback)
+    },
+    login: function(endpoint, email, password, callback){
+        makeRequest({
+            method: 'POST',
+            url: endpoint + '/login',
+            data: {
+                'email': email,
+                'password': password
             }
-        })
-
+        }, callback)
     }
+}
+
+var makeRequest = function(requestData, callback){
+
+    requestData.success = function(response){
+console.log(response)
+        if( response.status === STATUS_SUCCESS ){
+            callback();
+        } else if(response.status === STATUS_FAILURE || 
+                  response.status === STATUS_ERROR ){
+            callback(response.message);
+        } else {
+            callback('An error occurred.');
+        }
+    }
+
+    requestData.error = function(jqXHR, status, errorThrown){
+        callback('Error contacting server. You might want to try again.');
+    }
+
+    $.ajax(requestData);
+
+        // $.ajax(
+        //     requestData,
+        //     success: function(response){
+        //         if( response.status === STATUS_SUCCESS ){
+        //             callback();
+        //         } else if(response.status === STATUS_FAILURE || 
+        //                   response.status === STATUS_ERROR ){
+        //             callback(response.message);
+        //         } else {
+        //             callback('An error occurred.');
+        //         }
+        //     },
+        //     error: function( jqXHR, status, errorThrown){
+        //         callback('Error contacting server. You might want to try again.');
+        //     }
+        // })
+
 }
 
 },{}]},{},[1]);

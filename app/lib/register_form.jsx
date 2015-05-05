@@ -65,7 +65,7 @@ module.exports = React.createClass({
                         type="password"
                         label="ConfirmPassword"
                         ref="confirmPassword"/>
-                    <input type="submit" value="Post" />
+                    <input type="submit" value="Submit" />
                 </form>
             </div>
         )
