@@ -27,6 +27,10 @@ module.exports = {
 
 var makeRequest = function(requestData, callback){
 
+    requestData.xhrFields = {
+       withCredentials: true
+  };
+
     requestData.success = function(response){
 console.log(response)
         if( response.status === STATUS_SUCCESS ){
